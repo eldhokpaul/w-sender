@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="js/jquery.js"></script>
+    <script src="js/ajax_libs_xlsx_0.14.3_xlsx.full.min.js"></script>
+    <script src="js/popup.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=PT Sans Caption' rel='stylesheet'>
+    <link rel="stylesheet" href="css/popup.css">
+</head>
+
+<body style="font-family: PT Sans Caption;">
+    <div id="attachment_popup" style="display: none;">
+        <div style="background-color: rgba(0, 0, 0, 0.5);opacity: .95 !important;height: 2848px;width: 1440px;
+            position: fixed;left: 0px;top: 0px;z-index: 1001;"></div>
+        <div style="position: fixed;z-index: 1002;background: #fff;padding: 12px;top: 400px;">
+            <div style="display: flex;">
+                <input type="checkbox" name="attachments" value="attachments" checked>
+                <label style="padding-top: 2px;padding-left: 4px;"> Add Attachment</label><br>
+            </div>
+            <div style="font-size: 11px;margin: 4px 2px;color: #C4C4C4;">
+                <img src="logo/sound-bell.png" style="width: 14px;height: 14px;margin-right: 4px;" />
+                Read the following instructions before sending the attachment
+            </div>
+            <div>
+                <ul>
+                    <li>Click on 'Add Attachment' >> Click on the file type >> Select the file you'd like to send</li>
+                    <li>The first message would be sent to you itself</li>
+                    <li>Once it is sent, open the extension and click on 'Send Message'. Your messages along with the
+                        image/video will be sent one by one</li>
+                </ul>
+            </div>
+            <button id="attachment_popup_okay"
+                style="border: 0px;margin: 0px 120px;width: 180px;height: 32px;background-color: #7bc152;border-radius: 4px;color: white;cursor: pointer;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);font-family: PT Sans Caption;font-weight: 700;">
+                Okay</button>
+        </div>
+    </div>
+    <div style="padding: 12px;padding-bottom: 0px;">
+        <div>
+            <div style="font-size: 16px;font-weight: 700;display: flex;margin-bottom: 12px;float: left;">
+                <img src="logo/large.png" style="width: 36px;" />
+                <div style="padding: 8px;">Elif Sender</div>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <div style="margin-bottom: 4px;">
+            <div class="text_title radio-item" style="padding: 8px 0px;">
+                <label>Enter numbers to message</label>
+            </div>
+            <textarea id="numbers"
+                placeholder="Enter numbers separated by comma(,). Include country code. Eg. 91912365800, 18256562311"
+                style="width: 424px;height: 44px;padding: 12px;"></textarea><br />
+            <div id="number_disable_message" style="font-size: 11px;margin: 4px 2px;color: #707274;display: none;">
+                The numbers have been freezed. To edit, please re-upload the updated excel.
+            </div>
+        </div>
+        <div class="text_title radio-item" style="padding: 8px 0px;">
+            <label>Upload excel (csv) of numbers</label>
+        </div>
+        <div style="margin-bottom: 4px;">
+            <div style="float: left;">
+                <label
+                    style="color: #7bc152;border: 1px solid #7bc152;border-radius: 4px;padding: 6px 12px;cursor: pointer;display: inline-flex;">
+                    <img src="logo/upload.png" style="width: 14px;padding-right: 4px;" />
+                    <span>Upload</span>
+                    <input type="file" id="csv" value="Upload" accept=".xls,.xlsx,.ods,.csv" style="display: none;" />
+                </label>
+                <div id="uploaded_csv" style="color: #C4C4C4;"></div>
+            </div>
+            <!-- <div style="display: grid;float: right;">
+                <div id="download_group" style="color: #7bc152;cursor: pointer;display: flex;">
+                    <img src="logo/download.png" style="width: 14px;padding-right: 4px;" />
+                    <span>Download Group Contacts</span>
+                </div>
+            </div> -->
+        </div>
+        <div style="clear: both"></div>
+        <div style="border: 1px solid #C4C4C4;width: 100%;margin-top: 16px;"></div>
+        <div class="text_title" style="margin-left: 0px;padding: 8px 0px;margin-top: 8px;">
+            Enter Message
+            <span style="float: right;color: #707274;font-size: 12px;font-weight: 500;">
+                <span style="font-weight: bold;margin-right: 12px;">*text*</span>
+                <span style="font-style: italic;margin-right: 12px;">_text_</span>
+                <span style="text-decoration: line-through;margin-right: 12px;">~text~</span>
+                <a href="https://getemoji.com/" target="_blank" style="color: #707274;">EMOJIS</a>
+            </span>
+        </div>
+        <textarea type="text" id="message" placeholder="Type your message here..."
+            style="margin: 0px 0px 8px 0px;width: 424px;height: 44px;padding: 12px;"></textarea><br />
+        <div style="margin-bottom: 12px;">
+            <input type="checkbox" id="customization" name="customization" value="customization">
+            <label style="padding-top: 2px;">Add customisation from excel</label>
+            <select id="customized_arr" style="margin-left: 4px;">
+                <option selected disabled>Select option</option>
+            </select>
+        </div>
+        <div style="clear: both;"></div>
+        <div id="attachment" style="margin-bottom: 12px;">
+            <div style="display: flex;">
+                <input type="checkbox" id="send_attachments" name="attachments" value="attachments">
+                <label style="padding-top: 2px;padding-left: 4px;"> Add Attachment</label>
+                <button style="border: 1px solid #7bc152;color: #7bc152;padding: 0px 4px;
+                        margin-left: 4px;border-radius: 50%;" id="attachment_info">?</button><br>
+            </div>
+            <div id="attachment_type" hidden="true">
+                <input type="radio" id="pv" name="attachment" value="pv">
+                <label style="padding-top: 2px;padding-left: 4px;padding-right: 8px;" for="pv">Image/Video</label>
+                <input type="radio" id="doc" name="attachment" value="doc">
+                <label style="padding-top: 2px;padding-left: 4px;padding-right: 8px;" for="doc">Document</label>
+                <input type="radio" id="cn" name="attachment" value="cn">
+                <label style="padding-top: 2px;padding-left: 4px;padding-right: 8px;" for="cn">Contact</label>
+            </div>
+        </div>
+        <div style="clear: both"></div>
+        <div style="margin-bottom: 12px;">
+            <div style="display: flex;">
+                <label style="padding-top: 2px;padding-right: 4px;">Add a time gap of</label>
+                <input type="number" id="time_gap" name="time_gap" min="1" max="500" style="width: 40px;">
+                <label style="padding-top: 2px;padding-left: 4px;"> seconds between messages</label><br>
+            </div>
+        </div>
+        <div class="text_body" style="margin-left: 8px;padding: 8px 0px;color: red;display: none;" id="error_message">
+        </div>
+        <button id="sender"
+            style="border: 0px;margin-left: 8px;width: 120px;height: 32px;background-color: #7bc152;border-radius: 4px;color: white;cursor: pointer;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);font-family: PT Sans Caption;font-weight: 700;">
+            Send Message</button>
+        <button id="report"
+            style="border: 1px solid #7bc152;margin-left: 24px;width: 140px;height: 32px;background-color: #fff;border-radius: 4px;color: #7bc152;cursor: pointer;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);font-family: PT Sans Caption;font-weight: 700;">
+            Delivery Report</button>
+        <button id="stop"
+            style="border: 0px;margin-left: 80px;width: 60px;height: 32px;background-color: #F40B0B;border-radius: 4px;color: white;cursor: pointer;box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);font-family: PT Sans Caption;font-weight: 700;">
+            Stop</button>
+        <br /><br />
+    </div>
+    <div style="background: rgba(0, 196, 81, 0.25);width: 93%;padding: 12px 16px;margin-bottom: 12px;">
+        <div style="font-weight: normal;font-size: 10px;line-height: 12px;color: #000; text-align: center;">
+            <a href="https://elifcs.com" target="_blank" style="color: #7bc152;text-decoration: unset;">Elif
+                Consultancy and Services Pvt Ltd.</a> 2021 All Rights Reserved.
+        </div>
+    </div>
+    </div>
+    <div></div>
+</body>
+
+</html>

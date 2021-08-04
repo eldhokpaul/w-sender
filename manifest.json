@@ -1,0 +1,26 @@
+{
+   "background": {
+      "scripts": [ "js/jquery.js", "js/background.js" ]
+   },
+   "browser_action": {
+      "default_popup": "popup.html",
+      "default_title": "Elif Sender"
+   },
+   "content_scripts": [ {
+      "css": [ "css/content.css" ],
+      "js": [ "js/jquery.js", "js/content.js" ],
+      "matches": [ "*://web.whatsapp.com/*" ]
+   } ],
+   "content_security_policy": "script-src 'self'; object-src 'self'",
+   "default_locale": "en",
+   "description": "Elif messaging tool",
+   "icons": {
+      "128": "logo/large.png",
+      "16": "logo/small.png",
+      "48": "logo/medium.png"
+   },
+   "manifest_version": 2,
+   "name": "Elif Sender",
+   "permissions": [ "storage", "notifications", "tabs" ],
+   "version": "0.1"
+}
