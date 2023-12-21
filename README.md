@@ -1,7 +1,8 @@
 # w-sender -For WhatsApp Web
-● Send personalized message, picture, video and document
-● Send bulk WhatsApp message from excel
-● Save your own WhatsApp promotion message template
+● Chrome browser plugins
+● Send personalized messages, pictures, videos, and document
+● Send bulk WhatsApp messages from Excel
+● Save your WhatsApp promotion message template
 ● Customizable sending interval
 ● Current sending progress
 ● Pause and resume at any time
